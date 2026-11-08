@@ -129,12 +129,31 @@ footer small{color:var(--muted);font-size:.7rem;letter-spacing:.22em;text-transf
   .tile h3{font-size:1.2rem}
   .nav .hide-sm{display:none}
 }
+
+/* animated background layer */
+.bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.strip,.nav,header,section,.marquee,footer{position:relative;z-index:1}
+.nav{z-index:9}
+.bgfx .blob{position:absolute;width:46vmax;height:46vmax;border-radius:50%;filter:blur(70px);opacity:.22;
+  background:radial-gradient(closest-side,var(--red),transparent);animation:blob 26s ease-in-out infinite}
+.bgfx .blob.b2{left:55%;top:55%;width:38vmax;height:38vmax;opacity:.14;animation-duration:32s;animation-direction:reverse}
+@keyframes blob{0%,100%{transform:translate(-10vw,-6vh)}33%{transform:translate(30vw,20vh)}66%{transform:translate(5vw,55vh)}}
+.bgfx .cursor{position:absolute;width:420px;height:420px;margin:-210px 0 0 -210px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(238,43,36,.18),transparent);transform:translate(var(--mx,50vw),var(--my,30vh));transition:transform .25s ease-out}
+.bgfx .ic{position:absolute;color:var(--fg);opacity:.09;animation:drift var(--d,22s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+.bgfx .ic.r{color:var(--red);opacity:.22}
+.bgfx .ic svg{width:var(--s,64px);height:var(--s,64px);display:block;animation:spin var(--sp,40s) linear infinite}
+@keyframes drift{0%,100%{transform:translate(0,0)}25%{transform:translate(28px,-46px)}50%{transform:translate(-18px,-90px)}75%{transform:translate(-40px,-30px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bgfx .spark{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);opacity:0;animation:spark var(--d,6s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+@keyframes spark{0%,100%{opacity:0;transform:translateY(0) scale(.6)}50%{opacity:.9;transform:translateY(-60px) scale(1)}}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
 }
 </style>
 
+<div class="bgfx" aria-hidden="true"><div class="blob"></div><div class="blob b2"></div><div class="cursor"></div><span class="ic " style="left:8%;top:14%;--s:70px;--d:24s;--dl:0s;--sp:50s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="3" width="16" height="9" rx="2"/><rect x="16" y="36" width="16" height="9" rx="2"/><circle cx="24" cy="24" r="12"/><path d="M24 17v7l5 3"/><path d="M36 22h3v4h-3"/></svg></span><span class="ic " style="left:82%;top:20%;--s:66px;--d:28s;--dl:-6s;--sp:60s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="19" y="4" width="10" height="7" rx="1.5"/><path d="M21 11v4M27 11v4"/><path d="M14 15h20l3 8v17a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4V23z"/><path d="M15 27h18"/><path d="M33 7l4-2M33 10h5"/></svg></span><span class="ic r" style="left:70%;top:62%;--s:80px;--d:22s;--dl:-3s;--sp:45s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 4v10M30 4v10"/><path d="M12 14h24v8a12 12 0 0 1-24 0z"/><path d="M24 34v10"/><path d="M26 19l-4 6h5l-4 6"/></svg></span><span class="ic " style="left:14%;top:58%;--s:60px;--d:26s;--dl:-10s;--sp:55s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="30" r="13"/><circle cx="24" cy="30" r="9"/><path d="M18 9l6-5 6 5-6 8z"/><path d="M18 9h12"/></svg></span><span class="ic " style="left:40%;top:85%;--s:90px;--d:30s;--dl:-4s;--sp:70s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="18" width="16" height="12" rx="6"/><rect x="16" y="18" width="16" height="12" rx="6" transform="rotate(0)"/><rect x="29" y="18" width="16" height="12" rx="6"/></svg></span><span class="ic r" style="left:90%;top:78%;--s:46px;--d:18s;--dl:-2s;--sp:38s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M27 3L11 27h12l-3 18 17-25H25z"/></svg></span><span class="ic " style="left:30%;top:30%;--s:42px;--d:20s;--dl:-8s;--sp:42s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8h24l8 11-20 23L4 19z"/><path d="M4 19h40M18 8l-4 11 10 23 10-23-4-11"/></svg></span><span class="ic r" style="left:58%;top:8%;--s:44px;--d:25s;--dl:-12s;--sp:48s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="3" width="16" height="9" rx="2"/><rect x="16" y="36" width="16" height="9" rx="2"/><circle cx="24" cy="24" r="12"/><path d="M24 17v7l5 3"/><path d="M36 22h3v4h-3"/></svg></span><span class="ic r" style="left:4%;top:88%;--s:52px;--d:27s;--dl:-5s;--sp:52s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="19" y="4" width="10" height="7" rx="1.5"/><path d="M21 11v4M27 11v4"/><path d="M14 15h20l3 8v17a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4V23z"/><path d="M15 27h18"/><path d="M33 7l4-2M33 10h5"/></svg></span><span class="ic " style="left:48%;top:48%;--s:38px;--d:19s;--dl:-9s;--sp:36s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M27 3L11 27h12l-3 18 17-25H25z"/></svg></span><span class="ic r" style="left:76%;top:42%;--s:40px;--d:23s;--dl:-14s;--sp:44s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="30" r="13"/><circle cx="24" cy="30" r="9"/><path d="M18 9l6-5 6 5-6 8z"/><path d="M18 9h12"/></svg></span><span class="ic " style="left:22%;top:4%;--s:48px;--d:29s;--dl:-7s;--sp:58s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 4v10M30 4v10"/><path d="M12 14h24v8a12 12 0 0 1-24 0z"/><path d="M24 34v10"/><path d="M26 19l-4 6h5l-4 6"/></svg></span><span class="spark" style="left:32%;top:43%;--d:4.5s;--dl:-3.2s"></span><span class="spark" style="left:21%;top:16%;--d:4.3s;--dl:-3.2s"></span><span class="spark" style="left:39%;top:12%;--d:5.1s;--dl:-4.3s"></span><span class="spark" style="left:37%;top:27%;--d:8.1s;--dl:-2.1s"></span><span class="spark" style="left:5%;top:87%;--d:8.0s;--dl:-6.4s"></span><span class="spark" style="left:26%;top:26%;--d:5.5s;--dl:-5.0s"></span><span class="spark" style="left:95%;top:52%;--d:4.4s;--dl:-4.8s"></span><span class="spark" style="left:87%;top:54%;--d:6.5s;--dl:-1.4s"></span><span class="spark" style="left:62%;top:40%;--d:4.4s;--dl:-7.5s"></span><span class="spark" style="left:72%;top:43%;--d:4.0s;--dl:-2.3s"></span><span class="spark" style="left:92%;top:44%;--d:8.2s;--dl:-4.1s"></span><span class="spark" style="left:54%;top:59%;--d:7.0s;--dl:-3.4s"></span><span class="spark" style="left:22%;top:34%;--d:5.5s;--dl:-6.5s"></span><span class="spark" style="left:7%;top:15%;--d:4.2s;--dl:-5.0s"></span><span class="spark" style="left:37%;top:71%;--d:6.7s;--dl:-3.8s"></span><span class="spark" style="left:45%;top:23%;--d:9.0s;--dl:-1.6s"></span></div>
 <div class="strip pad">Stickers edición limitada · Junta la colección · Est. 2026</div>
 
 <nav class="nav pad" aria-label="Principal">
@@ -258,3 +277,9 @@ footer small{color:var(--muted);font-size:.7rem;letter-spacing:.22em;text-transf
   </div>
   <small>© 2026 TuPlugMx · Est. 2026</small>
 </footer>
+
+<script>
+(function(){var r=document.documentElement;var raf=0;
+window.addEventListener('pointermove',function(e){if(raf)return;raf=requestAnimationFrame(function(){r.style.setProperty('--mx',e.clientX+'px');r.style.setProperty('--my',e.clientY+'px');raf=0;});},{passive:true});
+})();
+</script>
