@@ -106,6 +106,27 @@ a.row:hover{border-color:var(--red);transform:translateX(4px)}
 .row .n{font-weight:900;color:var(--red);font-size:1.4rem;width:46px;text-align:center}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
 
+
+/* próximamente: cinta de cerrado */
+.tile.soon{cursor:default}
+.tile.soon:hover{transform:none;border-color:var(--line)}
+.tile.soon > :not(.tape){opacity:.32;filter:grayscale(1)}
+.tile.soon:hover .ghost-word{-webkit-text-stroke-color:var(--line);transform:none}
+.tape{position:absolute;left:-20%;right:-20%;top:42%;transform:rotate(-14deg);z-index:2;display:flex;flex-direction:column;align-items:center;gap:0;pointer-events:none}
+.tape b{display:block;width:100%;text-align:center;white-space:nowrap;overflow:hidden;font-weight:900;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:#141212;padding:7px 0;
+  background:repeating-linear-gradient(-45deg,#f2c230 0 18px,#141212 18px 36px);box-shadow:0 8px 20px rgba(0,0,0,.5)}
+.tape b span{background:#f2c230;padding:2px 10px}
+.tape b + b{transform:rotate(22deg) translateY(-6px);opacity:.9}
+.tape small{margin-top:14px;background:var(--red);color:#fff;font-weight:900;font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;border-radius:999px;padding:6px 12px;transform:rotate(14deg)}
+/* dinámica de stickers */
+.slots{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.slot{width:62px;height:62px;border-radius:50%;border:2px dashed var(--line);display:grid;place-items:center;font-weight:900;font-size:1.2rem;color:var(--muted);position:relative}
+.slot.on{border:2px solid var(--red);background:rgba(238,43,36,.12);color:var(--fg);animation:pop 2.4s ease-in-out infinite;animation-delay:var(--dl,0s)}
+.slot.prize{width:auto;padding:0 18px;border-radius:999px;border:2px solid var(--red);background:var(--red);color:#fff;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase}
+@keyframes pop{0%,100%{transform:scale(1)}50%{transform:scale(1.08) rotate(-4deg)}}
+.how{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;color:var(--muted)}
+.how li{display:flex;gap:10px;align-items:baseline}
+.how li b{color:var(--red);font-weight:900}
 /* drop / dinámicas */
 .drop{border:1px solid var(--line);border-radius:24px;background:radial-gradient(120% 140% at 100% 0%,rgba(238,43,36,.22),transparent 55%),var(--panel);padding:clamp(22px,5vw,44px);display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;justify-content:space-between}
 .drop h2{margin:8px 0 10px;font-weight:900;font-stretch:88%;font-size:clamp(1.8rem,5vw,3rem);line-height:.92;text-transform:uppercase;max-width:16ch}
@@ -155,7 +176,7 @@ footer small{color:var(--muted);font-size:.7rem;letter-spacing:.22em;text-transf
 </style>
 
 <div class="bgfx" aria-hidden="true"><div class="blob"></div><div class="blob b2"></div><div class="cursor"></div><span class="ic " style="left:8%;top:14%;--s:70px;--d:24s;--dl:0s;--sp:50s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="3" width="16" height="9" rx="2"/><rect x="16" y="36" width="16" height="9" rx="2"/><circle cx="24" cy="24" r="12"/><path d="M24 17v7l5 3"/><path d="M36 22h3v4h-3"/></svg></span><span class="ic " style="left:82%;top:20%;--s:66px;--d:28s;--dl:-6s;--sp:60s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="19" y="4" width="10" height="7" rx="1.5"/><path d="M21 11v4M27 11v4"/><path d="M14 15h20l3 8v17a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4V23z"/><path d="M15 27h18"/><path d="M33 7l4-2M33 10h5"/></svg></span><span class="ic r" style="left:70%;top:62%;--s:80px;--d:22s;--dl:-3s;--sp:45s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 4v10M30 4v10"/><path d="M12 14h24v8a12 12 0 0 1-24 0z"/><path d="M24 34v10"/><path d="M26 19l-4 6h5l-4 6"/></svg></span><span class="ic " style="left:14%;top:58%;--s:60px;--d:26s;--dl:-10s;--sp:55s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="30" r="13"/><circle cx="24" cy="30" r="9"/><path d="M18 9l6-5 6 5-6 8z"/><path d="M18 9h12"/></svg></span><span class="ic " style="left:40%;top:85%;--s:90px;--d:30s;--dl:-4s;--sp:70s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="18" width="16" height="12" rx="6"/><rect x="16" y="18" width="16" height="12" rx="6" transform="rotate(0)"/><rect x="29" y="18" width="16" height="12" rx="6"/></svg></span><span class="ic r" style="left:90%;top:78%;--s:46px;--d:18s;--dl:-2s;--sp:38s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M27 3L11 27h12l-3 18 17-25H25z"/></svg></span><span class="ic " style="left:30%;top:30%;--s:42px;--d:20s;--dl:-8s;--sp:42s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8h24l8 11-20 23L4 19z"/><path d="M4 19h40M18 8l-4 11 10 23 10-23-4-11"/></svg></span><span class="ic r" style="left:58%;top:8%;--s:44px;--d:25s;--dl:-12s;--sp:48s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="3" width="16" height="9" rx="2"/><rect x="16" y="36" width="16" height="9" rx="2"/><circle cx="24" cy="24" r="12"/><path d="M24 17v7l5 3"/><path d="M36 22h3v4h-3"/></svg></span><span class="ic r" style="left:4%;top:88%;--s:52px;--d:27s;--dl:-5s;--sp:52s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="19" y="4" width="10" height="7" rx="1.5"/><path d="M21 11v4M27 11v4"/><path d="M14 15h20l3 8v17a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4V23z"/><path d="M15 27h18"/><path d="M33 7l4-2M33 10h5"/></svg></span><span class="ic " style="left:48%;top:48%;--s:38px;--d:19s;--dl:-9s;--sp:36s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M27 3L11 27h12l-3 18 17-25H25z"/></svg></span><span class="ic r" style="left:76%;top:42%;--s:40px;--d:23s;--dl:-14s;--sp:44s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="30" r="13"/><circle cx="24" cy="30" r="9"/><path d="M18 9l6-5 6 5-6 8z"/><path d="M18 9h12"/></svg></span><span class="ic " style="left:22%;top:4%;--s:48px;--d:29s;--dl:-7s;--sp:58s"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 4v10M30 4v10"/><path d="M12 14h24v8a12 12 0 0 1-24 0z"/><path d="M24 34v10"/><path d="M26 19l-4 6h5l-4 6"/></svg></span><span class="spark" style="left:32%;top:43%;--d:4.5s;--dl:-3.2s"></span><span class="spark" style="left:21%;top:16%;--d:4.3s;--dl:-3.2s"></span><span class="spark" style="left:39%;top:12%;--d:5.1s;--dl:-4.3s"></span><span class="spark" style="left:37%;top:27%;--d:8.1s;--dl:-2.1s"></span><span class="spark" style="left:5%;top:87%;--d:8.0s;--dl:-6.4s"></span><span class="spark" style="left:26%;top:26%;--d:5.5s;--dl:-5.0s"></span><span class="spark" style="left:95%;top:52%;--d:4.4s;--dl:-4.8s"></span><span class="spark" style="left:87%;top:54%;--d:6.5s;--dl:-1.4s"></span><span class="spark" style="left:62%;top:40%;--d:4.4s;--dl:-7.5s"></span><span class="spark" style="left:72%;top:43%;--d:4.0s;--dl:-2.3s"></span><span class="spark" style="left:92%;top:44%;--d:8.2s;--dl:-4.1s"></span><span class="spark" style="left:54%;top:59%;--d:7.0s;--dl:-3.4s"></span><span class="spark" style="left:22%;top:34%;--d:5.5s;--dl:-6.5s"></span><span class="spark" style="left:7%;top:15%;--d:4.2s;--dl:-5.0s"></span><span class="spark" style="left:37%;top:71%;--d:6.7s;--dl:-3.8s"></span><span class="spark" style="left:45%;top:23%;--d:9.0s;--dl:-1.6s"></span></div>
-<div class="strip pad">Stickers edición limitada · Junta la colección · Est. 2026</div>
+<div class="strip pad">Junta 5 stickers y gana descuento · Est. 2026</div>
 
 <nav class="nav pad" aria-label="Principal">
   <div class="nav-in">
@@ -202,21 +223,23 @@ footer small{color:var(--muted);font-size:.7rem;letter-spacing:.22em;text-transf
       <h2>Elige tu <em>categoría.</em></h2>
     </div>
     <div class="tiles">
-      <a class="tile" href="https://ig.me/m/tuplugmx" target="_blank" rel="noopener">
+      <div class="tile soon" aria-label="Relojes: próximamente">
         <span class="ghost-word" aria-hidden="true">Time</span><span class="glow"></span>
-        <h3>Relojes</h3><p>Para diario o para lucir.</p><span class="go">Ver modelos ↗</span>
-      </a>
+        <h3>Relojes</h3><p>Para diario o para lucir.</p><span class="go">Próximamente</span>
+        <span class="tape" aria-hidden="true"><b><span>Próximamente · Próximamente · Próximamente · Próximamente</span></b><small>Muy pronto</small></span>
+      </div>
       <a class="tile" href="perfumes.html">
         <span class="ghost-word" aria-hidden="true">Oud</span><span class="glow"></span><span class="tag">Top</span>
         <h3>Perfumes árabes</h3><p>Aromas intensos que duran todo el día.</p><span class="go">Ver catálogo completo →</span>
       </a>
-      <a class="tile" href="https://ig.me/m/tuplugmx" target="_blank" rel="noopener">
+      <div class="tile soon" aria-label="Plata y oro: próximamente">
         <span class="ghost-word" aria-hidden="true">925</span><span class="glow"></span>
-        <h3>Plata y oro</h3><p>Cadenas, pulseras y anillos. Plata .925 y oro.</p><span class="go">Cotiza tu pieza ↗</span>
-      </a>
-      <a class="tile" href="https://ig.me/m/tuplugmx" target="_blank" rel="noopener">
-        <span class="ghost-word" aria-hidden="true">Merch</span><span class="glow"></span><span class="tag">Limitada</span>
-        <h3>Stickers y merch</h3><p>Stickers transparentes edición limitada. Junta la colección.</p><span class="go">Consigue el tuyo ↗</span>
+        <h3>Plata y oro</h3><p>Cadenas, pulseras y anillos.</p><span class="go">Próximamente</span>
+        <span class="tape" aria-hidden="true"><b><span>Próximamente · Próximamente · Próximamente · Próximamente</span></b><small>Muy pronto</small></span>
+      </div>
+      <a class="tile" href="#dinamica">
+        <span class="ghost-word" aria-hidden="true">Merch</span><span class="glow"></span><span class="tag">Junta 5</span>
+        <h3>Stickers TuPlug</h3><p>Cada compra trae un sticker. Junta 5 y llévate descuento.</p><span class="go">Ver dinámica ↓</span>
       </a>
     </div>
   </div>
@@ -260,13 +283,21 @@ footer small{color:var(--muted);font-size:.7rem;letter-spacing:.22em;text-transf
 </section>
 
 <section class="pad" style="padding-top:0">
-  <div class="wrap drop">
+  <div class="wrap drop" id="dinamica">
     <div>
-      <span class="eyebrow">Dinámicas</span>
-      <h2>Junta los stickers. Gana producto.</h2>
-      <p>Cada compra trae sticker. Sube foto con el tuyo, etiquétanos y entra a las rifas del mes.</p>
+      <span class="eyebrow">Dinámica TuPlug</span>
+      <h2>Junta 5 stickers. Gana descuento.</h2>
+      <p>Con cada compra te regalamos un sticker TuPlug. Cuando juntes 5, te damos un descuento en tu siguiente compra.</p>
+      <div class="slots" aria-hidden="true">
+        <span class="slot on" style="--dl:0s">1</span><span class="slot on" style="--dl:.2s">2</span><span class="slot on" style="--dl:.4s">3</span><span class="slot on" style="--dl:.6s">4</span><span class="slot on" style="--dl:.8s">5</span><span class="slot prize">Descuento</span>
+      </div>
+      <ol class="how">
+        <li><b>1</b>Compra y recibe tu sticker.</li>
+        <li><b>2</b>Síguenos en Instagram y TikTok y recomiéndanos con tus amigos.</li>
+        <li><b>3</b>Al juntar 5, mándanos foto por DM y canjea tu descuento.</li>
+      </ol>
     </div>
-    <a class="pill red" href="https://www.instagram.com/tuplugmx" target="_blank" rel="noopener">Ver dinámica ↗</a>
+    <a class="pill red" href="https://ig.me/m/tuplugmx" target="_blank" rel="noopener">Canjear por DM ↗</a>
   </div>
 </section>
 
