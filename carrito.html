@@ -115,11 +115,16 @@ footer a{color:var(--fg)}
 .clear{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font:600 .8rem var(--display);align-self:center}
 
 /* pasos y entrega */
+.lead{color:var(--muted);margin:6px 0 0;max-width:52ch}
+.steps a.on.done i,.steps a.done i{background:#25d366;color:#08130b;font-size:0}
+.steps a.done i::before{content:"✓";font-size:.8rem}
+.steps a.on.done,.steps a.done{border-color:#25d366;color:var(--fg)}
+.sec,.items{scroll-margin-top:100px}
 .steps{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
-.steps span{display:flex;align-items:center;gap:8px;font-size:.66rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:7px 12px 7px 7px;background:var(--panel)}
-.steps span i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--panel-2);color:var(--fg)}
-.steps span.on{color:var(--fg);border-color:var(--red)}
-.steps span.on i{background:var(--red);color:#fff}
+.steps a{text-decoration:none;display:flex;align-items:center;gap:8px;font-size:.66rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:7px 12px 7px 7px;background:var(--panel)}
+.steps a i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--panel-2);color:var(--fg)}
+.steps a.on{color:var(--fg);border-color:var(--red)}
+.steps a.on i{background:var(--red);color:#fff}
 .sec{display:flex;flex-direction:column;gap:10px;padding-top:14px;border-top:1px solid var(--line)}
 .sec h3{margin:0;display:flex;align-items:center;gap:10px;font-weight:900;font-stretch:90%;text-transform:uppercase;font-size:1rem}
 .sec h3 i{font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:.75rem}
@@ -170,7 +175,8 @@ details.msgbox pre{margin-top:8px}
   <div class="wrap">
     <span class="eyebrow">Tu carrito</span>
     <h1>Tu <em>pedido.</em></h1>
-    <div class="steps" aria-hidden="true"><span class="on"><i>1</i>Elige</span><span class="on" id="st2"><i>2</i>Entrega</span><span id="st3"><i>3</i>Envía</span></div>
+    <p class="lead">Así de fácil: revisa tus perfumes, llena tus datos de entrega y mándanos tu pedido.</p>
+    <nav class="steps" aria-label="Pasos del pedido"><a href="#items" class="on" id="st1"><i>1</i>Tus perfumes</a><a href="#datos" id="st2"><i>2</i>Datos de entrega y envío</a><a href="#enviar" id="st3"><i>3</i>Enviar pedido</a></nav>
     <div class="cols" id="cols">
       <div class="items" id="items"></div>
       <div class="box" id="box">
@@ -178,7 +184,7 @@ details.msgbox pre{margin-top:8px}
         <div class="total"><span>Piezas</span><span id="tot">0</span></div>
 
         <div class="sec">
-          <h3><i>1</i>Tus datos</h3>
+          <h3 id="datos">Datos de entrega y envío</h3><p class="note" style="margin-top:-4px">¿A quién se lo entregamos?</p>
           <div class="grid2">
             <div class="f"><label for="cname">Nombre</label><input id="cname" type="text" placeholder="Ej. Alejandro Andrade" autocomplete="name"></div>
             <div class="f"><label for="cphone">Teléfono</label><input id="cphone" type="tel" inputmode="tel" placeholder="10 dígitos" autocomplete="tel"></div>
@@ -186,7 +192,7 @@ details.msgbox pre{margin-top:8px}
         </div>
 
         <div class="sec">
-          <h3><i>2</i>¿Cómo lo quieres?</h3>
+          <h3>¿Cómo quieres recibirlo?</h3>
           <div class="opts" role="radiogroup" aria-label="Forma de entrega">
             <label class="opt"><input type="radio" name="mode" value="mano" checked><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V7a5 5 0 0 1 10 0v4"/><rect x="4" y="11" width="16" height="10" rx="2"/></svg>Entrega en mano</b><small>En Puebla o Ecatepec, sin costo de envío.</small></label>
             <label class="opt"><input type="radio" name="mode" value="envio"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v10H3z"/><path d="M14 10h4l3 3v4h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>Envío a domicilio</b><small>Por paquetería a todo México.</small></label>
@@ -212,7 +218,7 @@ details.msgbox pre{margin-top:8px}
         </div>
 
         <div class="sec">
-          <h3><i>3</i>Envía tu pedido</h3>
+          <h3 id="enviar">Enviar pedido</h3>
           <p class="warn" id="warn" hidden></p>
           <details class="msgbox"><summary>Ver mensaje</summary><pre id="msg"></pre></details>
           <a class="pill wa act" id="wa" href="#" target="_blank" rel="noopener">Enviar por WhatsApp ↗</a>
@@ -266,7 +272,7 @@ function render(){
 }
 function upd(){const m=msg();$('#msg').textContent=m;
   $('#mano').hidden=mode()!=='mano';$('#envio').hidden=mode()!=='envio';
-  const {miss}=missing();if(!miss.length)$('#warn').hidden=true;$('#st3').classList.toggle('on',!miss.length);
+  const {miss}=missing();if(!miss.length)$('#warn').hidden=true;$('#st1').classList.add('done');$('#st2').classList.toggle('done',!miss.length);$('#st2').classList.toggle('on',true);$('#st3').classList.toggle('on',!miss.length);
   const wa=$('#wa');if(WA_NUMBER){wa.hidden=false;wa.href='https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(m);}else{wa.hidden=true;}}
 function check(e){const {miss,lab}=missing();if(!miss.length){$('#warn').hidden=true;return true;}
   miss.forEach(f=>$('#'+f).classList.add('bad'));$('#warn').textContent='Te falta: '+miss.map(f=>lab[f]).join(', ')+'.';$('#warn').hidden=false;
