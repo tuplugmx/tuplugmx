@@ -76,13 +76,52 @@ header p{color:var(--muted);margin:0;max-width:52ch}
 .buy span{font-size:.7rem;color:var(--muted);letter-spacing:.06em}
 .buy .pill{padding:10px 14px;font-size:.66rem}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:60px 0}
-.more{display:flex;justify-content:center;padding-bottom:60px}
+.more{display:flex;justify-content:center;padding-bottom:110px}
 
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,140%);background:var(--fg);color:var(--bg);font-weight:800;font-size:.85rem;padding:12px 18px;border-radius:999px;z-index:20;transition:transform .3s ease;max-width:calc(100% - 32px);text-align:center}
 .toast.show{transform:translate(-50%,0)}
 
 footer{border-top:1px solid var(--line);padding-block:30px;text-align:center;color:var(--muted);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase}
 footer a{color:var(--fg)}
+
+/* carrito */
+.cartbtn{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:15;display:flex;align-items:center;gap:10px;background:var(--red);color:#fff;border:0;border-radius:999px;padding:14px 20px;font:900 .8rem var(--display);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;box-shadow:0 10px 30px rgba(238,43,36,.4);transition:transform .2s}
+.cartbtn:hover{transform:translateY(-2px)}
+.cartbtn svg{width:20px;height:20px}
+.cartbtn .n{background:#fff;color:var(--red);border-radius:999px;min-width:24px;height:24px;display:grid;place-items:center;font-size:.78rem;letter-spacing:0;font-variant-numeric:tabular-nums}
+.cartbtn.bump{animation:bump .4s ease}
+@keyframes bump{50%{transform:scale(1.12)}}
+.add{border:0;cursor:pointer}
+.add.in{background:var(--fg);color:var(--bg)}
+.shade{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:30;opacity:0;pointer-events:none;transition:opacity .25s}
+.shade.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);z-index:31;background:var(--panel);border-left:1px solid var(--line);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.7,.2,1);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px)}
+.drawer.open{transform:none}
+.dh{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line)}
+.dh h2{margin:0;font-weight:900;font-stretch:88%;text-transform:uppercase;font-size:1.5rem}
+.x{background:none;border:1px solid var(--line);color:var(--fg);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.1rem}
+.drawer{overflow-y:auto}
+.items{flex:1 0 auto;padding:12px 20px;display:flex;flex-direction:column;gap:10px}
+.it{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:8px;background:var(--panel-2)}
+.it img{width:64px;height:64px;object-fit:contain;background:var(--card);border-radius:10px}
+.it b{display:block;font-weight:900;font-stretch:90%;text-transform:uppercase;font-size:.85rem;line-height:1.15}
+.it small{color:var(--muted);font-size:.74rem}
+.qty{display:flex;align-items:center;gap:6px}
+.qty button{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--fg);cursor:pointer;font-weight:900}
+.qty span{min-width:18px;text-align:center;font-weight:900;font-variant-numeric:tabular-nums}
+.emptycart{color:var(--muted);text-align:center;padding:40px 10px}
+.df{border-top:1px solid var(--line);padding:16px 20px 20px;display:flex;flex-direction:column;gap:10px}
+.df label{font-size:.68rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.df input{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--fg);border-radius:12px;padding:12px 14px;font:600 .95rem var(--display)}
+.df input:focus{outline:none;border-color:var(--red)}
+.df .send{justify-content:center;padding:16px;font-size:.78rem}
+.df .note{color:var(--muted);font-size:.78rem;margin:0;text-align:center}
+.df .clear{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font:600 .78rem var(--display)}
+.sent{display:none;flex-direction:column;gap:10px}
+.sent.show{display:flex}
+.sent pre{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;font:500 .8rem/1.45 var(--display);max-height:150px;overflow:auto;margin:0;user-select:all}
+.toast{z-index:40}
 @media (max-width:520px){
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .name{font-size:.88rem}
@@ -135,6 +174,26 @@ footer a{color:var(--fg)}
 </main>
 
 <footer class="pad"><a href="./">TuPlugMx</a> · @tuplugmx · Est. 2026</footer>
+<button class="cartbtn" id="cartbtn" type="button" aria-label="Ver mi pedido"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Mi pedido <span class="n" id="cartn">0</span></button>
+<div class="shade" id="shade"></div>
+<aside class="drawer" id="drawer" aria-label="Mi pedido" aria-hidden="true">
+  <div class="dh"><h2>Mi pedido</h2><button class="x" id="close" type="button" aria-label="Cerrar">✕</button></div>
+  <div class="items" id="items"></div>
+  <div class="df">
+    <label for="cname">Tu nombre</label>
+    <input id="cname" type="text" placeholder="Ej. Alejandro" autocomplete="name">
+    <label for="ccity">Ciudad / entrega</label>
+    <input id="ccity" type="text" placeholder="Ej. Puebla, entrega en mano" autocomplete="address-level2">
+    <button class="pill red send" id="send" type="button">Enviar pedido por Instagram ↗</button>
+    <p class="note">Copiamos tu pedido completo y te abrimos nuestro DM. Solo pégalo y envíalo.</p>
+    <div class="sent" id="sent">
+      <p class="note">Si no se pegó solo, copia este mensaje:</p>
+      <pre id="msg"></pre>
+      <a class="pill ghost send" href="https://ig.me/m/tuplugmx" target="_blank" rel="noopener">Abrir DM de nuevo ↗</a>
+    </div>
+    <button class="clear" id="clear" type="button">Vaciar pedido</button>
+  </div>
+</aside>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -178,22 +237,54 @@ function render(){
     a.innerHTML='<div class="ph">'+(d.k?'<span class="tag'+(d.k==='Top'?' top':'')+'">'+(d.k==='Top'?'Más pedido':'Nuevo')+'</span>':'')+
       '<img loading="lazy" decoding="async" src="perfumes/'+d.i+'.webp" alt="'+d.b+' '+d.n+'" width="450" height="450"></div>'+
       '<div class="body"><span class="brand">'+d.b+'</span><h3 class="name">'+d.n+'</h3><span class="spec">'+d.ml+' ml · '+d.g+'</span>'+
-      '<div class="buy"><span>Precio por DM</span><a class="pill red" href="'+IG+'" target="_blank" rel="noopener">Pedir ↗</a></div></div>';
-    a.querySelector('a').addEventListener('click',()=>copyOrder(d));
+      '<div class="buy"><span>Precio por DM</span><button type="button" class="pill red add'+(cart[d.i]?' in':'')+'">'+(cart[d.i]?'En pedido ('+cart[d.i]+')':'Agregar +')+'</button></div></div>';
+    a.querySelector('.add').addEventListener('click',e=>{addItem(d.i);const b=e.currentTarget;b.classList.add('in');b.textContent='En pedido ('+cart[d.i]+')';});
     g.appendChild(a);
   });
   $('#more').hidden=list.length<=state.limit;
 }
 let tt;
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3200);}
-function copyOrder(d){
-  const msg='¡Hola! Me interesa el '+d.b+' '+d.n+' ('+d.ml+' ml). ¿Precio y disponibilidad?';
-  try{navigator.clipboard.writeText(msg).then(()=>toast('Copiamos tu pedido. Pégalo en el DM 👌'),()=>toast('Mándanos: '+d.b+' '+d.n));}catch(e){toast('Mándanos: '+d.b+' '+d.n);}
+const BY={};DATA.forEach(d=>BY[d.i]=d);
+let cart={};
+try{cart=JSON.parse(localStorage.getItem('tp_cart')||'{}')||{};}catch(e){cart={};}
+Object.keys(cart).forEach(k=>{if(!BY[k])delete cart[k];});
+function save(){try{localStorage.setItem('tp_cart',JSON.stringify(cart));}catch(e){}}
+function totalQty(){return Object.values(cart).reduce((a,b)=>a+b,0);}
+function addItem(i){cart[i]=(cart[i]||0)+1;save();updateCart(true);toast('Agregado a tu pedido');}
+function setQty(i,q){if(q<=0)delete cart[i];else cart[i]=q;save();updateCart();render();}
+function updateCart(bump){
+  const n=totalQty();$('#cartn').textContent=n;
+  if(bump){const b=$('#cartbtn');b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');}
+  const box=$('#items');box.innerHTML='';
+  const keys=Object.keys(cart);
+  if(!keys.length){box.innerHTML='<div class="emptycart">Tu pedido está vacío.<br>Agrega perfumes con el botón “Agregar +”.</div>';}
+  keys.forEach(i=>{const d=BY[i];const r=document.createElement('div');r.className='it';
+    r.innerHTML='<img src="perfumes/'+d.i+'.webp" alt=""><div><b>'+d.n+'</b><small>'+d.b+' · '+d.ml+' ml</small></div><div class="qty"><button type="button" aria-label="Quitar uno">−</button><span>'+cart[i]+'</span><button type="button" aria-label="Agregar uno">+</button></div>';
+    const [m,p]=r.querySelectorAll('button');m.onclick=()=>setQty(i,cart[i]-1);p.onclick=()=>setQty(i,cart[i]+1);box.appendChild(r);});
+  $('#send').disabled=!keys.length;$('#send').style.opacity=keys.length?1:.4;
 }
+function buildMsg(){
+  const lines=Object.keys(cart).map(i=>{const d=BY[i];return '• '+cart[i]+' x '+d.b+' '+d.n+' ('+d.ml+' ml)';});
+  const nm=$('#cname').value.trim(),ct=$('#ccity').value.trim();
+  return '¡Hola TuPlug! Quiero hacer este pedido:\n'+lines.join('\n')+'\n\nTotal de piezas: '+totalQty()+(nm?'\nNombre: '+nm:'')+(ct?'\nEntrega: '+ct:'')+'\n\n¿Me pasas precio total y disponibilidad?';
+}
+function openCart(){$('#drawer').classList.add('open');$('#shade').classList.add('open');$('#drawer').setAttribute('aria-hidden','false');}
+function closeCart(){$('#drawer').classList.remove('open');$('#shade').classList.remove('open');$('#drawer').setAttribute('aria-hidden','true');}
+$('#cartbtn').onclick=openCart;$('#close').onclick=closeCart;$('#shade').onclick=closeCart;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCart();});
+$('#send').onclick=()=>{
+  if(!totalQty())return;
+  const m=buildMsg();$('#msg').textContent=m;$('#sent').classList.add('show');
+  const go=()=>{const a=document.createElement('a');a.href=IG;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();a.remove();};
+  try{navigator.clipboard.writeText(m).then(()=>{toast('Pedido copiado. Pégalo en el DM y envíalo 👌');go();},()=>{toast('Copia el mensaje y pégalo en el DM');go();});}catch(e){toast('Copia el mensaje y pégalo en el DM');go();}
+};
+$('#clear').onclick=()=>{cart={};save();updateCart();render();$('#sent').classList.remove('show');};
 $('#q').addEventListener('input',e=>{state.q=e.target.value;state.limit=48;render();});
 $('#more').onclick=()=>{state.limit+=48;render();};
 $('#reset').onclick=()=>{Object.assign(state,{q:'',t:'Todos',g:'Todos',b:'Todas',limit:48});$('#q').value='';render();};
 const p=new URLSearchParams(location.search);if(p.get('q')){state.q=p.get('q');$('#q').value=state.q;}
+updateCart();
 render();
 </script>
 </body>
