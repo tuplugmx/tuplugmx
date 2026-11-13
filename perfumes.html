@@ -76,7 +76,7 @@ header p{color:var(--muted);margin:0;max-width:52ch}
 .buy span{font-size:.7rem;color:var(--muted);letter-spacing:.06em}
 .buy .pill{padding:10px 14px;font-size:.66rem}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:60px 0}
-.more{display:flex;justify-content:center;padding-bottom:110px}
+.more{display:flex;justify-content:center;padding-bottom:40px}
 
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,140%);background:var(--fg);color:var(--bg);font-weight:800;font-size:.85rem;padding:12px 18px;border-radius:999px;z-index:20;transition:transform .3s ease;max-width:calc(100% - 32px);text-align:center}
 .toast.show{transform:translate(-50%,0)}
@@ -96,6 +96,21 @@ footer a{color:var(--fg)}
 .add.in{background:var(--fg);color:var(--bg)}
 .toast{z-index:40;display:flex;gap:12px;align-items:center}
 .toast a{color:var(--red);font-weight:900;text-decoration:underline;white-space:nowrap}
+
+/* no lo encuentras */
+.ask{border:1px solid var(--line);border-radius:24px;background:radial-gradient(120% 140% at 100% 0%,rgba(238,43,36,.22),transparent 55%),var(--panel);padding:clamp(22px,5vw,40px);display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:center;margin-bottom:120px}
+.ask h2{margin:8px 0 10px;font-weight:900;font-stretch:88%;font-size:clamp(1.8rem,5vw,2.8rem);line-height:.92;text-transform:uppercase;text-wrap:balance}
+.ask h2 em{font-family:var(--serif);font-style:italic;font-weight:400;text-transform:none;color:var(--red)}
+.ask p{margin:0;color:var(--muted);max-width:44ch}
+.askf{display:flex;flex-direction:column;gap:10px;min-width:0}
+.askf input{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--fg);border-radius:14px;padding:15px 16px;font:600 1rem var(--display)}
+.askf input:focus{outline:none;border-color:var(--red)}
+.askf .row2{display:flex;gap:8px;flex-wrap:wrap}
+.askf .row2 .pill{flex:1;justify-content:center;padding:15px}
+.askf .wa{background:#25d366;color:#08130b}
+.askf small{color:var(--muted);font-size:.78rem}
+.empty .pill{margin-top:16px}
+@media (max-width:760px){.ask{grid-template-columns:1fr}}
 @media (max-width:520px){
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .name{font-size:.88rem}
@@ -144,6 +159,22 @@ footer a{color:var(--fg)}
     <div class="meta"><span id="count"></span><button class="chip" id="reset" hidden>Quitar filtros</button></div>
     <div class="grid" id="grid"></div>
     <div class="more"><button class="pill ghost" id="more" hidden>Ver más perfumes</button></div>
+    <section class="ask" id="pedir-otro" aria-labelledby="ask-h">
+      <div>
+        <span class="eyebrow">Pedidos especiales</span>
+        <h2 id="ask-h">¿No encuentras <em>tu perfume?</em></h2>
+        <p>Tenemos más modelos de los que aparecen aquí y conseguimos sobre pedido. Escríbenos cuál buscas y te decimos si lo tenemos y en cuánto.</p>
+      </div>
+      <div class="askf">
+        <label class="eyebrow" for="askq" style="color:var(--muted)">¿Cuál buscas?</label>
+        <input id="askq" type="text" placeholder="Ej. Lattafa Vintage Radio, Out of This World…" autocomplete="off">
+        <div class="row2">
+          <a class="pill wa" id="askwa" href="#" target="_blank" rel="noopener" hidden>Preguntar por WhatsApp ↗</a>
+          <a class="pill red" id="askig" href="https://ig.me/m/tuplugmx" target="_blank" rel="noopener">Preguntar por Instagram ↗</a>
+        </div>
+        <small>Por Instagram copiamos tu mensaje: pégalo en el chat y envíalo.</small>
+      </div>
+    </section>
   </div>
 </main>
 
@@ -186,7 +217,7 @@ function render(){
   $('#count').innerHTML='<b>'+list.length+'</b> perfume'+(list.length===1?'':'s');
   $('#reset').hidden=!(state.q||state.t!=='Todos'||state.g!=='Todos'||state.b!=='Todas');
   const g=$('#grid');g.innerHTML='';
-  if(!list.length){g.innerHTML='<div class="empty">No encontramos ese perfume. Escríbenos por DM y te lo conseguimos.</div>';}
+  if(!list.length){g.innerHTML='<div class="empty">No lo tenemos en el catálogo, pero te lo podemos conseguir.<br><a class="pill red" href="#pedir-otro" id="goask">Preguntar por “'+state.q.replace(/[<>"]/g,'')+'” ↓</a></div>';const ga=document.getElementById('goask');if(ga)ga.onclick=()=>{$('#askq').value=state.q;askUpd();};}
   list.slice(0,state.limit).forEach(d=>{
     const a=document.createElement('article');a.className='card';
     a.innerHTML='<div class="ph">'+(d.k?'<span class="tag'+(d.k==='Top'?' top':'')+'">'+(d.k==='Top'?'Más pedido':'Nuevo')+'</span>':'')+
@@ -210,6 +241,11 @@ function updateCart(bump){$('#cartn').textContent=totalQty();if(bump){const b=$(
 function addItem(i){cart[i]=(cart[i]||0)+1;save();updateCart(true);
   const t=$('#toast');t.innerHTML='<span>Agregado al carrito ('+totalQty()+')</span><a href="carrito.html">Ver carrito →</a>';t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3500);}
 window.addEventListener('pageshow',()=>{load();updateCart();render();});
+const WA_NUMBER=''; // ej. 5215512345678
+function askMsg(){const q=$('#askq').value.trim();return '¡Hola TuPlug! Estoy buscando '+(q?'el perfume: '+q:'un perfume que no vi en el catálogo')+'. ¿Lo tienen o me lo pueden conseguir? ¿En cuánto sale?';}
+function askUpd(){const w=$('#askwa');if(WA_NUMBER){w.hidden=false;w.href='https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(askMsg());}}
+$('#askq').addEventListener('input',askUpd);askUpd();
+$('#askig').addEventListener('click',()=>{const m=askMsg();try{navigator.clipboard.writeText(m).then(()=>toast('Mensaje copiado. Pégalo en el DM 👌'),()=>toast('Escríbenos cuál buscas en el DM'));}catch(e){toast('Escríbenos cuál buscas en el DM');}});
 $('#q').addEventListener('input',e=>{state.q=e.target.value;state.limit=48;render();});
 $('#more').onclick=()=>{state.limit+=48;render();};
 $('#reset').onclick=()=>{Object.assign(state,{q:'',t:'Todos',g:'Todos',b:'Todas',limit:48});$('#q').value='';render();};
